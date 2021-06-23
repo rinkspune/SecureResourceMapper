@@ -1,0 +1,46 @@
+<div class="jumbotron jrhead py-0">
+    <h6 class="display-6 text-center">Resource Registration</h6>
+</div>
+<div class="jumbotron">
+    <form #form="ngForm" novalidate (submit)=onSubmit(form);>
+        <input type="hidden" name="paymentDetailId" value=`this.service.formDataModelPD.paymentDetailId`>
+        <!-- <input type="text" name="paymentDetailId" value=`this.service.formDataModelPD.paymentDetailId`> -->
+
+        <div class="form-group">
+            <label>Card Owner Name</label>
+            <input type="text" class="form-control form-control-lg" name="cardOwnerName" placeholder="card Owner Name"
+                #cardOwnerName="ngModel" [(ngModel)]="this.service.formDataModelPD.cardOwnerName" required
+                [class.invalid]="cardOwnerName.invalid && cardOwnerName.touched" />
+        </div>
+
+        <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" class="form-control form-control-lg" name="cardNumber" placeholder="Card Number"
+                #cardNumber="ngModel" [(ngModel)]="this.service.formDataModelPD.cardNumber" required
+                [class.invalid]="cardNumber.invalid && cardNumber.touched" maxlength="16" minlength="16" />
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Exp. Date</label>
+                <input type="text" class="form-control form-control-lg" name="expirationDate" placeholder="MM/YY"
+                    #expirationDate="ngModel" [(ngModel)]="this.service.formDataModelPD.expirationDate" required
+                    [class.invalid]="expirationDate.invalid && expirationDate.touched" maxlength="5" minlength="5" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Security Code</label>
+                <input type="text" class="form-control form-control-lg" name="securityCode" placeholder="Security Code"
+                    #securityCode="ngModel" [(ngModel)]="this.service.formDataModelPD.securityCode" required
+                    [class.invalid]="securityCode.invalid && securityCode.touched" maxlength="3" minlength="3" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-info btn-lg  col-md-6" [disabled]="form.invalid">Submit</button>
+            <button type="reset" class="col-md-6">Cancel</button>
+        </div>
+
+    </form>
+</div>
