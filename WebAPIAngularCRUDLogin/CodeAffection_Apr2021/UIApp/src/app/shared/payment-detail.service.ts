@@ -30,7 +30,7 @@ export class PaymentDetailService {
 
   //***Get payment Details */     //***Refresh payment Detail */
   refreshList() {
-    this.serviceMessage = "refreshList called !! ";
+    this.serviceMessage = '';//"refreshList called !! ";
 
     // debugger;
     this.httpClient.get(this.baseURL)

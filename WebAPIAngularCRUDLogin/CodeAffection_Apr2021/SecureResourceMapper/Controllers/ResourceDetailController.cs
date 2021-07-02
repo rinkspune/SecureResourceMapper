@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DotNetCoreDemo.Models;
 using SecureResourceMapper.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace SecureResourceMapper.Controllers
 {
@@ -22,11 +28,43 @@ namespace SecureResourceMapper.Controllers
         }
 
         // GET: api/ResourceDetail
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResourceDetail>>> GetresourceDetails()
+        public async Task<ActionResult<IEnumerable<object>>> GetresourceDetails()
         {
-            return await _context.resourceDetails.ToListAsync();
+            if (_context.resourceDetails.ToListAsync().Result.Count() > 0)
+                return await _context.resourceDetails.ToListAsync();
+            else
+                return await _context.paymentDetails.ToListAsync();
         }
+
+        [HttpPost, Route("login")]
+        public  IActionResult Login([FromBody] LoginModel user)
+        {
+            if (user == null)
+                return BadRequest("Invalid user request");
+
+            if (user.UserName == "Vedant Upwanshi" && user.Password == "Ramanuj Upwanshi")
+            {
+
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var tokenOptions = new JwtSecurityToken(
+                    issuer: "http://localhost:23495",
+                    audience: "http://localhost:23495",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(10),
+                    signingCredentials: signingCredentials
+                    );
+
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                return  Ok(new { Token = tokenString });
+            }
+            return  Unauthorized();
+        }
+
 
         // GET: api/ResourceDetail/5
         [HttpGet("{id}")]

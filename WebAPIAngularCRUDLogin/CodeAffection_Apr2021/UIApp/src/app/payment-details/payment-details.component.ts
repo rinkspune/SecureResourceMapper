@@ -22,6 +22,7 @@ export class PaymentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.refreshList();
+    if(this.service.serviceMessage !='')
     this.toast.error(this.service.serviceMessage, 'Refresh List Payment Detail');
 
     // alert(JSON.stringify(this.service.serviceMessage));

@@ -1,21 +1,19 @@
-import { Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+@Injectable({
+  providedIn: 'root'
 })
+export class AuthenticateUserService {
+
+  constructor() { }
 
 
-export class AppComponent {
-  title = 'PaymentApp03';
-
-  isUserAuthenticated() {
+  public isUserAuthenticated() {
     const token: string = localStorage.getItem('jwt') || '';
     return token != '' ? true : false;
   }
 
-  logOut() {
+  public logOut() {
     console.log('#logOut Method call# jwt token value before removing: ' + localStorage.getItem('jwt'));
     localStorage.removeItem('jwt');
   }

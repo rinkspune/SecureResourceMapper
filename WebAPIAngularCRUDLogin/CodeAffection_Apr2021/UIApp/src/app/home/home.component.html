@@ -1,0 +1,44 @@
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+
+    <h2>Welcome Home !
+        <span class="text-danger">
+            a ristricted zone
+        </span>
+    </h2>
+    <br/>
+    <span style="background-color:gray;">
+        You are
+    </span>
+    <span *ngIf="authUserSrv.isUserAuthenticated()" style="background-color:blue;color: greenyellow;">
+        LOGGED-IN
+    </span>
+    <span *ngIf="!authUserSrv.isUserAuthenticated()" style="background-color:red;">
+        a Guest-User
+    </span>
+</header>
+<br>
+<div class="container-fluid">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a routerLink="/paymentdetail" class="nav-link">Payment Detail</a>
+
+            </li>
+
+            <li class="nav-item" *ngIf="!authUserSrv.isUserAuthenticated();">
+                <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="authUserSrv.isUserAuthenticated();">
+                <a class="logout nav-link" (click)="authUserSrv.logOut();">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

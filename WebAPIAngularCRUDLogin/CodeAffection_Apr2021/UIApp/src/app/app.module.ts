@@ -13,6 +13,11 @@ import { PaymentDetailsComponent } from './payment-details/payment-details.compo
 import { PaymentDetailFormComponent } from './payment-details/payment-detail-form/payment-detail-form.component';
 import { FormsModule } from '@angular/forms';
 import { ResourceDetailComponent } from './resource-detail/resource-detail.component';
+import { LoginComponent } from './login/login.component';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { AuthGuardGuard } from './guard/auth-guard.guard';
+
 
 
 @NgModule({
@@ -21,13 +26,20 @@ import { ResourceDetailComponent } from './resource-detail/resource-detail.compo
     PaymentDetailsComponent,
     PaymentDetailFormComponent,
     ResourceDetailComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
 
     HttpClientModule,
-
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'resourcedetail', component: ResourceDetailComponent },
+      { path: 'paymentdetail', component: PaymentDetailsComponent }
+    ]),
     BrowserAnimationsModule,
     ToastrModule.forRoot(
       {
@@ -39,7 +51,8 @@ import { ResourceDetailComponent } from './resource-detail/resource-detail.compo
       }
     ),
   ],
-  providers: [],
+  exports: [RouterModule],
+  providers: [AuthGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
